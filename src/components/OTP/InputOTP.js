@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import OtpInput from 'react-otp-input';
 import CountDown from './CountDown';
-
+import CountDownAnimation from './CountDownAnimation';
 
 const InputOTP = (props) => {
     const [otp, setOtp] = useState('');
@@ -23,8 +23,12 @@ const InputOTP = (props) => {
                 renderSeparator={<span>-</span>}
                 renderInput={(props) => <input {...props} />}
             />
+            {/* //<CountDown setOverTimeCommitOTP={props.setOverTimeCommitOTP} */}
             <div className='timer'>
-                <CountDown setOverTimeCommitOTP={props.setOverTimeCommitOTP} />
+                <CountDown />
+                <CountDownAnimation
+                    setOverTimeCommitOTP={props.setOverTimeCommitOTP}
+                />
             </div>
             <div className='action'>
                 <button className='clear'>Clear</button>

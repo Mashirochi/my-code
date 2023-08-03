@@ -4,7 +4,6 @@ import "./otp.scss"
 import { Helmet } from 'react-helmet';
 import { useEffect, useState } from "react";
 import CountDownAnimation from "./CountDownAnimation";
-
 const OTP = () => {
     const TITLE = 'OTP APP';
     const [orgOTPParent, setOrgOTPParent] = useState("");
