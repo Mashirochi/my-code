@@ -1,45 +1,58 @@
-import React, { useState } from 'react';
+import { useState, useRef } from 'react';
 import OtpInput from 'react-otp-input';
 import CountDown from './CountDown';
 import CountDownAnimation from './CountDownAnimation';
 
 const InputOTP = (props) => {
-    const [otp, setOtp] = useState('');
+    const childRef = useRef();
+    const [otp, setOtp] = useState("");
     const handleChange = (otp) => {
         setOtp(otp);
-        props.setuserInputOTPParent(otp);
+        props.setUserOTPParent(otp);
     }
+
     const handleConfirmOTP = () => {
         props.handleSubmitOTP();
     }
+
+    const handleClearBtn = () => {
+        childRef.current.restTimer();
+        console.log(">>> check ref: ", childRef)
+    }
     return (
         <div className='input-otp-container'>
-            <div className='title'>Enter Verification Code</div>
+            <div className='title'>Enter verification code</div>
             <OtpInput
-                inputStyle={"input-customize"}
                 value={otp}
                 onChange={handleChange}
                 numInputs={6}
-                renderSeparator={<span>-</span>}
-                renderInput={(props) => <input {...props} />}
+                separator={<span>-</span>}
+                inputStyle={"input-customize"}
             />
-            {/* //<CountDown setOverTimeCommitOTP={props.setOverTimeCommitOTP} */}
             <div className='timer'>
-                <CountDown />
+                {/* <CountDown
+                    setIsDisableBtn={props.setIsDisableBtn}
+                /> */}
                 <CountDownAnimation
-                    setOverTimeCommitOTP={props.setOverTimeCommitOTP}
+                    setIsDisableBtn={props.setIsDisableBtn}
+                    ref={childRef}
                 />
             </div>
             <div className='action'>
-                <button className='clear'>Clear</button>
+                <button className='clear'
+                    onClick={() => handleClearBtn()}
+                    disabled={!props.isDisableBtn}
+                >Clear</button>
                 <button className='confirm'
+                    disabled={props.isDisableBtn}
                     onClick={() => handleConfirmOTP()}
-                    disabled={props.overTimeCommitOTP}>
-
-                    Confirm</button>
+                >
+                    Confirm
+                </button>
             </div>
         </div>
     )
+
 }
 
 export default InputOTP;

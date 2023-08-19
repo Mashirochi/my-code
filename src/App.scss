@@ -7,6 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -16,15 +18,56 @@ code {
   display: inline-block;
 }
 
+@media (min-width: 1350px) {
+
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm {
+    max-width: 1700px !important;
+  }
+}
+
 .app-container {
   .header-container {
-    .navbar-nav {
+    .btn-login {
+      border-radius: 5px;
+      margin-right: 15px;
+      padding: 0 15px;
+      border: 1px solid #535353;
+      height: 40px;
+      width: 90px;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+
+    .btn-signup {
+      border-radius: 5px;
+      padding: 0 15px;
+      background: #303030;
+      color: #ffffff;
+      height: 40px;
+      width: 90px;
+
+      &:hover {
+        background-color: black;
+      }
+    }
+
+    .navbar {
+      padding-top: 20px;
       z-index: 10;
-      opacity: 0.6;
+      background-color: rgba(0, 0, 0, 0) !important;
 
       .nav-link {
         &.active {
           color: #00bfff
+        }
+
+        &:hover {
+          color: red;
         }
       }
     }

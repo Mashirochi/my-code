@@ -9,6 +9,13 @@ const HomePage = (props) => {
                     type="video/mp4" />
 
             </video>
+            <div className="homepage-content">
+                <div>There’s a Better Way to Ask for Help</div>
+
+                <div></div>
+                <div></div>
+            </div>
+
         </div>
     )
 }
