@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./Login.scss"
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { loginUser } from "../../service/userService";
 
 const Login = () => {
     useEffect(() => {
@@ -10,8 +11,42 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const handleLogin = () => {
-        toast.success("CLICk")
+    const defaultObjValidInput = {
+        isValidEmail: true,
+        isValidPassword: true
+    }
+    const [objValidInput, setObjValidInput] = useState(defaultObjValidInput)
+    const handleLogin = async () => {
+        setObjValidInput(defaultObjValidInput);
+        if (!email) {
+            setObjValidInput({
+                ...defaultObjValidInput, isValidEmail: false
+            })
+            toast.error("Pls enter email or phone")
+            return;
+        }
+        if (!password) {
+            setObjValidInput({
+                ...defaultObjValidInput, isValidPassword: false
+            })
+            toast.error("Pls enter your password")
+            return;
+        }
+
+        let res = await loginUser(email, password);
+        if (res && res.data && +res.data.EC === 0) {
+            //success
+            let data = {
+                isAuthenticated: true,
+                token: "fake token"
+            }
+            sessionStorage.setItem('account', JSON.stringify(data))
+            navigate("/")
+            window.location.reload();
+        }
+        if (res && res.data && +res.data.EC !== 0) {
+            toast.error(res.data.EM)
+        }
     }
     return (
         <div className="login-container">
@@ -32,7 +67,7 @@ const Login = () => {
                         type={"email"}
                         required
                         value={email}
-                        className="form-control"
+                        className={objValidInput.isValidEmail ? 'form-control' : "is-invalid form-control"}
                         onChange={(event) => setEmail(event.target.value)}
                     />
                     <label>Password</label>
@@ -40,7 +75,7 @@ const Login = () => {
                         required
                         type={"password"}
                         value={password}
-                        className="form-control"
+                        className={objValidInput.isValidPassword ? 'form-control' : "is-invalid form-control"}
                         onChange={(event) => setPassword(event.target.value)}
                     />
                 </div>

@@ -1,8 +1,20 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
+import _ from "lodash";
 
 const Header = () => {
+    const [account, setAccount] = useState({});
+
+    useEffect(() => {
+        let session = sessionStorage.getItem('account');
+        if (session) {
+            setAccount(account);
+        }
+    }, [])
+
+
     const navigate = useNavigate();
     const handlePressButtonLogin = () => {
         navigate("/login");
@@ -23,13 +35,11 @@ const Header = () => {
                         <Nav.Link as={NavLink} to="/hrefdoapp" className='nav-link'>Todoapp</Nav.Link>
                         <Nav.Link as={NavLink} to="/otpapp" className='nav-link'>OTP APP</Nav.Link>
                     </Nav>
-                    <Nav>
+                    {account && !_.isEmpty && account.isAuthenticated ? <div>luu cc</div> : <Nav >
                         <button className='btn-login' onClick={handlePressButtonLogin}>Log in</button>
                         <button className='btn-signup' onClick={handleRegister}>Sign up</button>
-                        {/* <NavDropdown title="Setting" id="basic-nav-dropdown">
-                            <NavDropdown.Item>Profile</NavDropdown.Item>
-                        </NavDropdown> */}
-                    </Nav>
+                    </Nav>}
+
                 </Navbar.Collapse>
             </Container>
         </Navbar>
