@@ -12,11 +12,14 @@
 
         .admin-header {
             height: 40px;
-            border: 1px solid green;
+            border: 1px solid white;
         }
 
         .admin-main {
-            border: 1px solid red;
+            .user-pagination {
+                display: flex;
+                justify-content: center;
+            }
         }
     }
 }

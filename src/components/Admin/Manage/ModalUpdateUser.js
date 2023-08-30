@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { registerNewUser } from '../../../service/userService';
 
-const ModalCreateUser = (props) => {
+const ModalUpdateUser = (props) => {
     const { show, setShow } = props;
 
     const handleClose = () => {
@@ -171,4 +171,4 @@ const ModalCreateUser = (props) => {
     );
 }
 
-export default ModalCreateUser;
+export default ModalUpdateUser;
