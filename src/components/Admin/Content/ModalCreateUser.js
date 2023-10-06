@@ -5,9 +5,12 @@ import { FcPlus } from "react-icons/fc"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { registerNewUser } from '../../../service/userService';
+import { useNavigate } from 'react-router'
+import _ from "lodash";
 
 const ModalCreateUser = (props) => {
     const { show, setShow } = props;
+
 
     const handleClose = () => {
         setShow(false);
@@ -20,8 +23,7 @@ const ModalCreateUser = (props) => {
         setUsername("");
         setAddress("");
     }
-
-
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
@@ -40,6 +42,20 @@ const ModalCreateUser = (props) => {
             );
     };
 
+    const validInputDefault = {
+        email: true,
+        phone: true,
+        username: true,
+        password: true,
+        role: true,
+        address: true,
+        sex: true,
+        image: true
+    }
+
+    const [userData, setUserData] = useState(handleClose);
+    const [validInputs, setValidInputs] = useState(validInputDefault);
+
     const handleUploadImage = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
             setPreviewImage(URL.createObjectURL(event.target.files[0]));
@@ -52,7 +68,6 @@ const ModalCreateUser = (props) => {
     const handleSubmitCreateUser = async () => {
         const isValidEmail = validateEmail(email);
         if (!isValidEmail) {
-            alert("1234")
             toast.error("invalidate email")
             return;
         }
@@ -65,6 +80,8 @@ const ModalCreateUser = (props) => {
         let res = await registerNewUser(email, phone, username, password)
         if (res.data && +res.data.EC === 0) {
             toast.success(res.data.EM)
+            // navigate(0);
+            props.fetchListUser();
             handleClose();
         } else {
             toast.error(res.data.EM)

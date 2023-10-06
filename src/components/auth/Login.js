@@ -34,7 +34,7 @@ const Login = () => {
         }
 
         let res = await loginUser(email, password);
-        if (res && res.data && +res.data.EC === 0) {
+        if (res && +res.EC === 0) {
             //success
             let data = {
                 isAuthenticated: true,

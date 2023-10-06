@@ -3,7 +3,7 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    useNavigate
+
 } from "react-router-dom";
 import User from './components/User';
 import Admin from './components/Admin/Admin';
@@ -18,7 +18,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from "./components/auth/Register";
 import ManageUser from "./components/Admin/Manage/ManageUser";
-
+import NotFound from "./components/Route/NotFound";
+import { PrivateRoute } from "./components/Route/PrivateRoute";
+import Code from "./components/SSO/Code";
 const Layout = () => {
     // const navigate = useNavigate();
 
@@ -35,15 +37,18 @@ const Layout = () => {
                 <Routes>
                     <Route path="/" element={<App />} >
                         <Route index element={<HomePage />} />
-                        <Route path="users" element={<User />} />
+                        <Route path="users" element={<PrivateRoute><User /> </PrivateRoute>} />
                         <Route path="otpapp" element={<OTP />} />
+                        <Route path="loginsso" element={<HomePage />} />
                     </Route >
+                    <Route path="code" element={< Code />}></Route >
                     <Route path="/login" element={<Login />}></Route>
                     <Route path="/register" element={<Register />}></Route>
                     <Route path="/admin" element={<Admin />} >
                         <Route index element={<DashBoard />} />
                         <Route path="manage-users" element={<ManageUser />} />
                     </Route>
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
             <ToastContainer

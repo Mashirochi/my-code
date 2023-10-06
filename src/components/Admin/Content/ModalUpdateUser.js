@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from "react-icons/fc"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { registerNewUser } from '../../../service/userService';
+import { registerNewUser, updateCurrentUser } from '../../../service/userService';
+import _ from "lodash";
 
 const ModalUpdateUser = (props) => {
-    const { show, setShow } = props;
-
+    const { dataUpdate, show, setShow } = props;
     const handleClose = () => {
         setShow(false);
         setEmail("");
@@ -19,6 +19,7 @@ const ModalUpdateUser = (props) => {
         setRole("");
         setUsername("");
         setAddress("");
+        props.resetUpdateData();
     }
 
 
@@ -31,6 +32,16 @@ const ModalUpdateUser = (props) => {
     const [sex, setSex] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
+
+    useEffect(() => {
+        if (!_.isEmpty(dataUpdate)) {
+            setPhone(dataUpdate.phone);
+            setEmail(dataUpdate.email);
+            setUsername(dataUpdate.username);
+            setRole(dataUpdate.role);
+            setImage("");
+        }
+    }, [props.dataUpdate]);
 
     const validateEmail = (email) => {
         return String(email)
@@ -52,7 +63,6 @@ const ModalUpdateUser = (props) => {
     const handleSubmitCreateUser = async () => {
         const isValidEmail = validateEmail(email);
         if (!isValidEmail) {
-            alert("1234")
             toast.error("invalidate email")
             return;
         }
@@ -61,15 +71,13 @@ const ModalUpdateUser = (props) => {
             toast.error("invalidate password")
             return;
         }
+        let res = await updateCurrentUser
 
-        let res = await registerNewUser(email, phone, username, password)
-        if (res.data && +res.data.EC === 0) {
-            toast.success(res.data.EM)
-            handleClose();
-        } else {
-            toast.error(res.data.EM)
-        }
+        // else {
+        //     toast.error(res.data.EM)
+        // }
     }
+
 
     return (
         <>
@@ -120,6 +128,7 @@ const ModalUpdateUser = (props) => {
                             <label className='form-lable'>Address</label>
                             <input type="text"
                                 className="form-control"
+                                disabled
                                 placeholder="Enter username"
                                 value={address}
                                 onChange={(event) => setAddress(event.target.value)} />
@@ -159,10 +168,10 @@ const ModalUpdateUser = (props) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={() => handleClose()}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSubmitCreateUser}>
+                    <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
                         Save
                     </Button>
                 </Modal.Footer>

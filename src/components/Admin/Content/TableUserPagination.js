@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-
+import { FaTrash } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
 const TableUserPagination = (props) => {
     const { listUsers, pageCount } = props;
     const handlePageClick = (event) => {
@@ -22,15 +22,16 @@ const TableUserPagination = (props) => {
                     {listUsers && listUsers.length > 0 && listUsers.map((item, index) => {
                         return (
                             <tr key={`table-users-${index}`}>
-                                <th >{item.id}</th>
+                                <th >{index + 1}</th>
                                 <td>{item.email}</td>
                                 <td>{item.username}</td>
                                 <td>{item.role}</td>
                                 <td>
-                                    <button className='btn btn-secondary'>View</button>
-                                    <button className='btn btn-info mx-3'>Update</button>
-                                    <button className='btn btn-danger' onClick={() => props.handleClickButtonDelete(item)}
-                                    >Delete</button>
+                                    <button className='btn btn-secondary' onClick={() => props.handleClickButtonView(item)}><IoEyeSharp /> View</button>
+                                    <button className='btn btn-info mx-3' onClick={() => props.handleClickButtonUpdate(item)}><i className="fa fa-pencil"></i>  Update</button>
+                                    <button className='btn btn-danger' onClick={() => props.handleClickButtonDelete(item)}><FaTrash /> Delete</button>
+
+
                                 </td>
                             </tr>)
 
