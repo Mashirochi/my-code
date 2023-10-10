@@ -11,7 +11,6 @@ const ModalDeleteUser = (props) => {
 
     const handleSubmitDeleteUser = async () => {
         let res = await deleteTheUser(dataDelete.id);
-        console.log("check res", res)
         if (res && +res.data.EC === 0) {
             toast.success(res.data.EM)
             await props.fetchListUser();

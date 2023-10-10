@@ -5,7 +5,7 @@ import { doGetAccount } from './redux/action/accountAction';
 import { useEffect } from 'react';
 import RingLoader from "react-spinners/RingLoader";
 import { useSelector, useDispatch } from 'react-redux'
-
+import axios from './service/customizeApi';
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.account.userInfo);
@@ -17,6 +17,8 @@ const App = () => {
       dispatch(doGetAccount());
     }
   }, [])
+
+
   return (
     <>
       {isLoading === true ?

@@ -48,5 +48,53 @@
         .back {
             cursor: pointer;
         }
+
+        .forget-password {
+            .forgot-password {
+                cursor: pointer;
+                color: #777;
+            }
+        }
+
+        .hello {
+            margin: auto;
+            text-align: center;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            background: transparent;
+
+            .auth-divider {
+                .or {
+                    background-color: white;
+                    position: relative;
+                    top: -1.8em;
+                    padding: 0 15px;
+                }
+            }
+        }
+
+        .social {
+            .sso {
+                border-radius: 5px;
+                background: white !important;
+                border: solid black;
+
+
+                .social-text {
+                    color: black !important;
+                }
+
+                .fb {
+                    margin: -5px !important;
+                }
+            }
+
+        }
+
+
     }
 }

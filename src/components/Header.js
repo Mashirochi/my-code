@@ -3,9 +3,13 @@ import { useState, useEffect } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import _ from "lodash";
+import { useSelector, useDispatch } from 'react-redux'
+import { doLogout } from "../redux/action/accountAction"
 
 const Header = () => {
     const [account, setAccount] = useState({});
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.account.userInfo);
 
     useEffect(() => {
         let session = sessionStorage.getItem('account');
@@ -18,6 +22,10 @@ const Header = () => {
     const navigate = useNavigate();
     const handleLoginSSO = () => {
         window.location.href = `${process.env.REACT_APP_BACKEND_SSO}?serviceURL=${process.env.REACT_APP_SERVICE_URL}`
+    }
+    const handleLogoutSSO = () => {
+
+        dispatch(doLogout());
     }
     const handlePressButtonLogin = () => {
         navigate("/login");
@@ -38,6 +46,7 @@ const Header = () => {
                         <Nav.Link as={NavLink} to="/hrefdoapp" className='nav-link'>Todoapp</Nav.Link>
                         <Nav.Link as={NavLink} to="/otpapp" className='nav-link'>OTP APP</Nav.Link>
                         <Nav.Link as={NavLink} to="/loginSSO" className='nav-link' onClick={() => handleLoginSSO()}>LOGIN SSO</Nav.Link>
+                        <Nav.Link as={NavLink} to="/" className='nav-link' onClick={() => handleLogoutSSO()}>LOGOUT SSO</Nav.Link>
                     </Nav>
                     {account && !_.isEmpty && account.isAuthenticated ? <div>luu cc</div> : <Nav >
                         <button className='btn-login' onClick={handlePressButtonLogin}>Log in</button>

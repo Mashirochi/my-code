@@ -3,7 +3,7 @@ import "./Login.scss"
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUser } from "../../service/userService";
-
+import axios from "../../service/customizeApi";
 const Login = () => {
     useEffect(() => {
         document.title = 'Login';
@@ -48,6 +48,13 @@ const Login = () => {
             toast.error(res.data.EM)
         }
     }
+
+    //test sso
+    useEffect(() => {
+        axios.get("http://localhost:8081/health").then(res => {
+            console.log("check 8081", res)
+        })
+    }, [])
     return (
         <div className="login-container">
             <div className="header">
@@ -79,15 +86,37 @@ const Login = () => {
                         onChange={(event) => setPassword(event.target.value)}
                     />
                 </div>
+                <div className="forget-password">
+                    <u className="forgot-password">Forgot password</u>
+                </div>
                 <div>
                     <button className="btn-submit"
                         onClick={handleLogin}>Login
+                    </button>
+                </div>
+                <div>
+                    <hr></hr>
+                    <div className="hello">
+                        <div className="auth-divider">
+                            <span className="or">Or</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="social">
+                    <button className="sso">
+                        <span className="social-text">Login with Google</span>
+
+                    </button>
+                    <button className="sso">
+                        <span className="social-text fb">Login with Facebook</span>
                     </button>
                 </div>
                 <div className="text-center">
                     <span className="back" onClick={() => { navigate("/") }}>&#60;&#60;&#60;Go to homepage</span >
                 </div>
             </div>
+
+
         </div>
 
     )
